@@ -1,3 +1,4 @@
+require 'colorize'
 require_relative 'tile.rb'
 
 class Board
@@ -80,7 +81,7 @@ attr_reader :height, :width, :bomb_count
 
   def display
     grid.map do |row|
-      row.map{|tile| tile.to_s}
+      row.map{|tile| tile.to_s(finished).colorize(:background => :black)}
     end
   end
 

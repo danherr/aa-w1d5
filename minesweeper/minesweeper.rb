@@ -1,3 +1,4 @@
+require 'colorize'
 require_relative 'board.rb'
 require_relative 'player.rb'
 
@@ -12,6 +13,8 @@ attr_reader :board, :player
 
   def play
     take_turn until board.finished
+
+    display
 
     if board.won
       puts "Good Job. You Won."
@@ -47,7 +50,7 @@ attr_reader :board, :player
     board_arr.each_with_index do |row, i|
       i >= 10 ? spaces = " " : spaces = "  "
       row = row.join("  ")
-      puts "#{i}#{spaces}#{row}"
+      puts i.to_s + "#{spaces}#{row} ".colorize(:background => :black)
     end
   end
 
