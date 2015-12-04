@@ -4,6 +4,7 @@ require_relative 'board.rb'
 
 class Minesweeper
 attr_reader :board, :player
+
   def initialize(player, board = Board.new)
     @board = board
     @player = player
@@ -11,6 +12,10 @@ attr_reader :board, :player
 
   def play
 
+  end
+
+  def take_turn
+    
   end
 
   def display

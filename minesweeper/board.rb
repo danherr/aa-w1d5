@@ -4,18 +4,24 @@ class Board
 
   RELATIVE_NEIGHBORS = [[-1, -1],[1, 1],[-1,1],[1,-1],[0,1],[0,-1],[1,0],[-1,0]]
 
-attr_accessor :grid
+attr_accessor :grid, :finished, :revealed_spaces, :won
 attr_reader :height, :width, :bomb_count
   def initialize(height = 9, width = 9, bomb_count = 10)
     @height = height
     @width = width
     @bomb_count = bomb_count
+    @finished = false
+    @won = false
+    @revealed_spaces = 0
     @grid = nil
+
     populate
     compute_bomb_count
+
   end
 
   def populate
+    self.revealed_spaces = 0
     self.grid = Array.new(height) { Array.new(width) }
     all_positions = []
     height.times do |row|
@@ -79,7 +85,20 @@ attr_reader :height, :width, :bomb_count
   end
 
   def reveal(pos)
-    self[pos].reveal
+    unless self[pos].revealed?
+      self[pos].reveal
+
+      self.revealed_spaces += 1
+
+      if self[pos].bomb?
+        self.finished = true
+        self.won = false
+      elsif revealed_spaces + bomb_count == height * width
+        self.finished = true
+        self.won = true
+      end
+
+    end
   end
 
   def unrevealed_neighbor_zeroes(pos)
