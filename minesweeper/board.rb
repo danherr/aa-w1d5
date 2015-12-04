@@ -7,7 +7,7 @@ class Board
   RELATIVE_NEIGHBORS = [[-1, -1],[1, 1],[-1,1],[1,-1],[0,1],[0,-1],[1,0],[-1,0]]
 
 attr_accessor :grid, :finished, :revealed_spaces, :won
-attr_reader :height, :width, :bomb_count
+attr_reader :height, :width, :bomb_count, :populated
   def initialize(height = 9, width = 9, bomb_count = 10)
     @height = height
     @width = width
@@ -15,25 +15,23 @@ attr_reader :height, :width, :bomb_count
     @finished = false
     @won = false
     @revealed_spaces = 0
-    @grid = nil
-
-    populate
-    compute_bomb_count
-
+    @populated = false
+    @grid = Array.new(height) { Array.new(width) { Tile.new(false) } }
   end
 
-  def populate
+  def populate(pos)
     self.revealed_spaces = 0
     self.grid = Array.new(height) { Array.new(width) }
     all_positions = []
     height.times do |row|
       width.times do |col|
-        all_positions << [row, col]
+        all_positions << [row, col] unless [row, col] == pos
       end
     end
     all_positions.shuffle!
     bomb_positions = all_positions.take(bomb_count)
     safe_positions = all_positions.drop(bomb_count)
+    safe_positions << pos
     bomb_positions.each do |position|
       x, y = position
       grid[x][y] = Tile.new(true)
@@ -42,7 +40,7 @@ attr_reader :height, :width, :bomb_count
       x, y = position
       grid[x][y] = Tile.new(false)
     end
-
+    compute_bomb_count
   end
 
   def neighbor_positions(position)
@@ -93,6 +91,11 @@ attr_reader :height, :width, :bomb_count
   end
 
   def reveal(pos)
+    unless populated
+      populate(pos)
+      @populated = true
+    end
+
     unless self[pos].revealed?
       self[pos].reveal
       self.revealed_spaces += 1
