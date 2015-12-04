@@ -56,13 +56,3 @@ attr_reader :board, :player
 
 
 end
-
-if __FILE__ == $PROGRAM_NAME
-
-  args = ARGV.map(&:to_i)
-
-  game = Minesweeper.new(Player.new, Board.new(*args))
-
-  game.play
-  
-end

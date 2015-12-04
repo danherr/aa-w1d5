@@ -1,0 +1,13 @@
+#! /usr/bin/env ruby
+
+require_relative 'minesweeper.rb'
+
+if __FILE__ == $PROGRAM_NAME
+
+  args = ARGV.map(&:to_i)
+
+  game = Minesweeper.new(Player.new, Board.new(*args))
+
+  game.play
+
+end

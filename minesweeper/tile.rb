@@ -1,7 +1,7 @@
 require 'colorize'
 
 class Tile
-  COLOR_HASH = {0 => :green, 1 => :light_blue , 2 => :cyan, 3 => :blue , 4 => :blue, 5 => :yellow , 6 => :yellow,7 => :light_red , 8 => :light_red}
+  COLOR_HASH = {0 => :white, 1 => :light_blue , 2 => :cyan, 3 => :blue , 4 => :blue, 5 => :yellow , 6 => :yellow,7 => :light_red , 8 => :light_red}
 
   attr_writer :revealed
 
