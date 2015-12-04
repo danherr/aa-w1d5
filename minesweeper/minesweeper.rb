@@ -1,6 +1,7 @@
 require 'colorize'
 require_relative 'board.rb'
 require_relative 'interface.rb'
+require_relative 'cursor_interface.rb'
 
 
 class Minesweeper

@@ -2,25 +2,17 @@ require "io/console"
 
 module Cursorable
   KEYMAP = {
-    " " => :space,
-    "h" => :left,
-    "j" => :down,
-    "k" => :up,
-    "l" => :right,
+    "r" => :reveal,
+    "q" => :quit,
+    "f" => :flag,
     "w" => :up,
     "a" => :left,
     "s" => :down,
     "d" => :right,
-    "\t" => :tab,
-    "\r" => :return,
-    "\n" => :newline,
-    "\e" => :escape,
     "\e[A" => :up,
     "\e[B" => :down,
     "\e[C" => :right,
     "\e[D" => :left,
-    "\177" => :backspace,
-    "\004" => :delete,
     "\u0003" => :ctrl_c,
   }
 
@@ -45,7 +37,7 @@ module Cursorable
     when :left, :right, :up, :down
       update_pos(MOVES[key])
       nil
-    else
+    when :flag
       puts key
     end
   end
@@ -68,6 +60,6 @@ module Cursorable
 
   def update_pos(diff)
     new_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
-    @cursor_pos = new_pos if @board.in_bounds?(new_pos)
+    @cursor_pos = new_pos if in_bounds?(new_pos)
   end
 end
