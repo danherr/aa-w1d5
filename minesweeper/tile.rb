@@ -27,6 +27,14 @@ class Tile
     self.revealed = true
   end
 
+  def to_s
+    unless !revealed?
+      return flagged? ? "^" : " "
+    end
+    neighbor_bomb_count
+  end
+
+
   private
 
   attr_writer :revealed

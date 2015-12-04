@@ -12,6 +12,7 @@ attr_reader :height, :width, :bomb_count
     @bomb_count = bomb_count
     @grid = nil
     populate
+    compute_bomb_count
   end
 
   def populate
@@ -52,6 +53,30 @@ attr_reader :height, :width, :bomb_count
     x >= 0 && y >= 0 && x < height && y < width
   end
 
+  def compute_bomb_count
+    grid.each_with_index do |row, i|
+      row.each_with_index do |tile, j|
+        neighbors = neighbor_positions([i,j])
 
+        bombs = 0
+
+        neighbors.each {|neighbor| self[neighbor].bomb? ? bombs += 1 : nil}
+
+        tile.neighbor_bomb_count = bombs
+      end
+    end
+  end
+
+  def [](pos)
+    x,y = pos
+    grid[x][y]
+  end
+
+  def display
+    grid.map do |row|
+      row.map{|tile| tile.to_s}.join(', ')
+    end
+
+  end
 
 end
