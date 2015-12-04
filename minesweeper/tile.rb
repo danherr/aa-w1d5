@@ -28,12 +28,12 @@ class Tile
   end
 
   def to_s
-    unless !revealed?
+    unless revealed?
       return flagged? ? "^" : " "
     end
+    return "B" if bomb?
     neighbor_bomb_count
   end
-
 
   private
 

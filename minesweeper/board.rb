@@ -76,7 +76,17 @@ attr_reader :height, :width, :bomb_count
     grid.map do |row|
       row.map{|tile| tile.to_s}.join(', ')
     end
-
   end
+
+  def reveal(pos)
+    self[pos].reveal
+  end
+
+  def unrevealed_neighbor_zeroes(pos)
+    neighbor_positions(pos).select do |pos|
+      self[pos].neighbor_bomb_count.zero? && !self[pos].revealed?
+    end
+  end
+
 
 end
