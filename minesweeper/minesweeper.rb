@@ -30,14 +30,14 @@ attr_reader :board, :interface
     turn = interface.prompt # ['r', [0,0]]
     pos = turn[1]
     action = turn[0]
-    if !board.in_bounds(pos) || board[pos].revealed?
+    if action == 'q'
+      raise "Quit"    
+    elsif !board.in_bounds(pos) || board[pos].revealed?
       interface.yell_at
     elsif action == 'r'
       board.reveal(pos)
     elsif action == 'f'
       board[pos].toggle_flag
-    elsif action == 'q'
-      raise "Quit"
     else
       interface.yell_about_action
     end
