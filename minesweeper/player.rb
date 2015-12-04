@@ -7,7 +7,7 @@ class Player
     puts "Enter your move. The position followed by whether you want to (F)lag or (R)eveal it."
     input = []
     until input.length == 3
-      input = gets.chomp
+      input = STDIN.gets.chomp
       input = input.split(",")
     end
 
