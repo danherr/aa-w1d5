@@ -1,5 +1,5 @@
 require_relative 'board.rb'
-# require_relative 'player.rb'
+require_relative 'player.rb'
 
 
 class Minesweeper
@@ -11,20 +11,29 @@ attr_reader :board, :player
   end
 
   def play
+    take_turn until board.finished
 
+    if board.won
+      puts "Good Job. You Won."
+    else
+      puts "You blew up. Your family will now starve."
+    end
   end
 
   def take_turn
+
     display
     turn = player.prompt # ['r', [0,0]]
     pos = turn[1]
     action = turn[0]
-    if board[pos].revealed? || !board[pos].in_bounds
+    if board[pos].revealed? || !board.in_bounds(pos)
       player.yell_at
     elsif action == 'r'
       board.reveal(pos)
     elsif action == 'f'
       board[pos].toggle_flag
+    elsif action == 'q'
+      raise "Quit"
     else
       player.yell_about_action
     end

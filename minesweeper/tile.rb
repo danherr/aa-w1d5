@@ -15,6 +15,10 @@ class Tile
     @bomb
   end
 
+  def flagged?
+    @flagged
+  end
+
   def toggle_flag
     self.flagged = !self.flagged
   end
