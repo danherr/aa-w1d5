@@ -74,7 +74,7 @@ attr_reader :height, :width, :bomb_count
 
   def display
     grid.map do |row|
-      row.map{|tile| tile.to_s}.join(" ")
+      row.map{|tile| tile.to_s}
     end
   end
 
