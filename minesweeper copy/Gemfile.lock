@@ -1,0 +1,9 @@
+GEM
+  specs:
+    remedy (0.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  remedy (~> 0.0.4.pre)

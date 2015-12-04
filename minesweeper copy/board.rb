@@ -1,7 +1,6 @@
 require 'colorize'
 require_relative 'tile.rb'
 
-
 class Board
 
   RELATIVE_NEIGHBORS = [[-1, -1],[1, 1],[-1,1],[1,-1],[0,1],[0,-1],[1,0],[-1,0]]

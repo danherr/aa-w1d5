@@ -1,20 +1,20 @@
 require 'colorize'
 require_relative 'board.rb'
-require_relative 'player.rb'
+require_relative 'interface.rb'
 
 
 class Minesweeper
-attr_reader :board, :player
+attr_reader :board, :interface
 
-  def initialize(player, board = Board.new)
+  def initialize(interface, board = Board.new)
     @board = board
-    @player = player
+    @interface = interface
   end
 
   def play
     take_turn until board.finished
 
-    display
+    interface.display(board.display)
 
     if board.won
       puts "Good Job. You Won."
@@ -25,12 +25,12 @@ attr_reader :board, :player
 
   def take_turn
 
-    display
-    turn = player.prompt # ['r', [0,0]]
+    interface.display(board.display)
+    turn = interface.prompt # ['r', [0,0]]
     pos = turn[1]
     action = turn[0]
-    if board[pos].revealed? || !board.in_bounds(pos)
-      player.yell_at
+    if !board.in_bounds(pos) || board[pos].revealed?
+      interface.yell_at
     elsif action == 'r'
       board.reveal(pos)
     elsif action == 'f'
@@ -38,21 +38,10 @@ attr_reader :board, :player
     elsif action == 'q'
       raise "Quit"
     else
-      player.yell_about_action
+      interface.yell_about_action
     end
   end
 
-  def display
-    board_arr = board.display
-    puts "   "  + (0...board.width).to_a.map { |num|
-      num < 10 ? "#{num}  " : "#{num} "}.join
-
-    board_arr.each_with_index do |row, i|
-      i >= 10 ? spaces = " " : spaces = "  "
-      row = row.join("  ")
-      puts i.to_s + "#{spaces}#{row} ".colorize(:background => :black)
-    end
-  end
 
 
 end
