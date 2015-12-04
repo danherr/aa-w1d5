@@ -84,12 +84,16 @@ attr_reader :height, :width, :bomb_count
     end
   end
 
+  def reveal_neighbors_recursively(pos)
+    unrevealed_neighbors(pos).each do |neighbor_pos|
+        reveal(neighbor_pos)
+    end
+  end
+
   def reveal(pos)
     unless self[pos].revealed?
       self[pos].reveal
-
       self.revealed_spaces += 1
-
       if self[pos].bomb?
         self.finished = true
         self.won = false
@@ -97,13 +101,15 @@ attr_reader :height, :width, :bomb_count
         self.finished = true
         self.won = true
       end
-
+      if self[pos].neighbor_bomb_count == 0
+        reveal_neighbors_recursively(pos)
+      end
     end
   end
 
-  def unrevealed_neighbor_zeroes(pos)
-    neighbor_positions(pos).select do |pos|
-      self[pos].neighbor_bomb_count.zero? && !self[pos].revealed?
+  def unrevealed_neighbors(pos)
+    neighbor_positions(pos).reject do |pos|
+      self[pos].revealed?
     end
   end
 
