@@ -15,7 +15,20 @@ attr_reader :board, :player
   end
 
   def take_turn
-    
+    display
+    turn = player.prompt # ['r', [0,0]]
+    pos = turn[1]
+    action = turn[0]
+    if board[pos].revealed? || !board[pos].in_bounds
+      player.yell_at
+    elsif action == 'r'
+      board.reveal(pos)
+    elsif action == 'f'
+      board[pos].toggle_flag
+    else
+      player.yell_about_action
+    end
+
   end
 
   def display

@@ -2,9 +2,9 @@
 
 class Tile
 
-  attr_writer :flagged, :revealed
+  attr_writer :revealed
 
-  attr_accessor :neighbor_bomb_count
+  attr_accessor :neighbor_bomb_count, :flagged
 
   def initialize(bomb, flagged = false, revealed = false)
       @bomb, @flagged, @revealed = bomb, flagged, revealed
@@ -15,8 +15,8 @@ class Tile
     @bomb
   end
 
-  def flagged?
-    @flagged
+  def toggle_flag
+    self.flagged = !self.flagged
   end
 
   def revealed?
