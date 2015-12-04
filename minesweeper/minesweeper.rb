@@ -28,7 +28,6 @@ attr_reader :board, :player
     else
       player.yell_about_action
     end
-
   end
 
   def display
